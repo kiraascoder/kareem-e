@@ -1,0 +1,74 @@
+########################
+# OS / Editor
+########################
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
+
+########################
+# Node / Frontend (global)
+########################
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+dist/
+.cache/
+*.tsbuildinfo
+
+########################
+# Laravel Backend
+########################
+backend/vendor/
+backend/node_modules/
+backend/public/storage/
+backend/storage/
+backend/bootstrap/cache/*.php
+backend/.env
+backend/.env.*
+backend/.phpunit.result.cache
+backend/.php-cs-fixer.cache
+
+########################
+# Laravel tests cache
+########################
+backend/storage/*.key
+backend/storage/debugbar/
+backend/storage/framework/cache/data/
+backend/storage/framework/sessions/
+backend/storage/framework/views/
+backend/storage/logs/
+
+########################
+# Python ML Service
+########################
+ml-service/venv/
+ml-service/__pycache__/
+ml-service/**/*.pyc
+ml-service/.ipynb_checkpoints/
+ml-service/.pytest_cache/
+ml-service/.mypy_cache/
+ml-service/.ruff_cache/
+# Kalau modelnya besar dan tidak mau di-commit, un-comment baris berikut:
+# ml-service/*.pkl
+
+########################
+# Vue Frontend
+########################
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.*
+frontend/.vite/
+frontend/coverage/
+
+########################
+# Misc
+########################
+.env
+.env.*
+*.sqlite
+*.sqlite3
