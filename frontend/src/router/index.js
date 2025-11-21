@@ -1,22 +1,20 @@
 import { createRouter, createWebHistory } from "vue-router";
+import HomeView from "../views/HomeView.vue";
+import AboutView from "../views/AboutView.vue";
+import ContactView from "../views/ContactView.vue";
+import BookingView from "../views/BookingView.vue";
 import DashboardView from "../views/DashboardView.vue";
 import EventListView from "../views/EventListView.vue";
-// PricingView, EventFormView nanti kita tambahkan
 
 const routes = [
-  {
-    path: "/",
-    name: "dashboard",
-    component: DashboardView,
-  },
-  {
-    path: "/events",
-    name: "events.index",
-    component: EventListView,
-  },
-  // nanti:
-  // { path: "/events/new", name: "events.create", component: EventFormView },
-  // { path: "/events/:id/pricing", name: "events.pricing", component: PricingView, props: true },
+  { path: "/", name: "home", component: HomeView },
+  { path: "/about", name: "about", component: AboutView },
+  { path: "/contact", name: "contact", component: ContactView },
+  { path: "/booking", name: "booking", component: BookingView },
+
+  // halaman internal (misal untuk admin/staff)
+  { path: "/dashboard", name: "dashboard", component: DashboardView },
+  { path: "/events", name: "events.index", component: EventListView },
 ];
 
 const router = createRouter({
