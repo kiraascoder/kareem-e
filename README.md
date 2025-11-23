@@ -1,4 +1,4 @@
-# Kareem Pricing 🪩  
+p# Kareem Pricing 🪩  
 **Dynamic Pricing System for Event Organizer (Kareem Entertainment)**
 
 Sistem web untuk membantu **Kareem Entertainment** menetapkan **harga penawaran event** secara lebih objektif dan adaptif menggunakan:

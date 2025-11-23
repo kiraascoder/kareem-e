@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\BookingController;
+use App\Http\Controllers\Api\PricingController;
 use App\Services\MlPricingService;
 use Illuminate\Http\Request;
 
@@ -28,3 +30,15 @@ Route::post('/test-ml', function (Request $request, MlPricingService $mlService)
         'ml_result'    => $result,
     ]);
 });
+
+
+Route::get('/ping', function () {
+    return response()->json(['message' => 'Backend OK']);
+});
+
+
+Route::apiResource('bookings', BookingController::class)
+    ->only(['index', 'store', 'show']);
+
+
+Route::post('/pricing/preview', [PricingController::class, 'previewPublic']);

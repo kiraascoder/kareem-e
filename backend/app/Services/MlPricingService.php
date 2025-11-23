@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Http;
 
 class MlPricingService
 {
-    public function predictPrice(array $payload)
+    public function predictPrice(array $payload): array
     {
-        $url = config('services.ml.url') . '/predict-price';
+        $url = rtrim(config('services.ml.url'), '/') . '/predict-price';
 
         $response = Http::post($url, $payload);
 
