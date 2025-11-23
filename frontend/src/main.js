@@ -1,7 +1,4 @@
-import axios from "axios";
+import { createApp } from "vue";
+import App from "./App.vue";
 
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api",
-});
-
-export default api;
+createApp(App).mount("#app");
