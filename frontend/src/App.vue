@@ -1,58 +1,65 @@
 <script setup>
-import { ref, onMounted } from "vue";
-import api from "./services/api";
-
-const backendMessage = ref("Loading...");
-const mlMessage = ref("Loading...");
-
-const fetchBackend = async () => {
-  try {
-    const res = await api.get("/ping");
-    backendMessage.value = res.data.message ?? JSON.stringify(res.data);
-  } catch (err) {
-    console.error(err);
-    backendMessage.value = "Gagal konek ke backend";
-  }
-};
-
-const testMl = async () => {
-  try {
-    const res = await api.post("/test-ml");
-    mlMessage.value = JSON.stringify(res.data.ml_result);
-  } catch (err) {
-    console.error(err);
-    mlMessage.value = "Gagal konek ke ML service lewat backend";
-  }
-};
-
-onMounted(() => {
-  fetchBackend();
-  testMl();
-});
+import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <template>
-  <main style="padding: 2rem; font-family: system-ui">
-    <h1 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem">
-      Kareem Pricing – Test Koneksi
-    </h1>
+  <div class="min-h-screen bg-slate-100">
+    <header
+      class="bg-slate-800 text-white px-6 py-3 flex items-center justify-between"
+    >
+      <h1 class="font-semibold text-lg">Kareem Pricing</h1>
 
-    <section style="margin-bottom: 1.5rem">
-      <h2 style="font-weight: 600">Backend Laravel:</h2>
-      <p>{{ backendMessage }}</p>
-    </section>
+      <nav class="flex flex-wrap gap-4 text-sm">
+        <RouterLink
+          to="/"
+          active-class="font-bold underline"
+          class="hover:underline"
+        >
+          Home
+        </RouterLink>
+        <RouterLink
+          to="/about"
+          active-class="font-bold underline"
+          class="hover:underline"
+        >
+          About
+        </RouterLink>
+        <RouterLink
+          to="/contact"
+          active-class="font-bold underline"
+          class="hover:underline"
+        >
+          Contact
+        </RouterLink>
+        <RouterLink
+          to="/booking"
+          active-class="font-bold underline"
+          class="hover:underline"
+        >
+          Booking
+        </RouterLink>
 
-    <section>
-      <h2 style="font-weight: 600">ML Service (via Laravel /api/test-ml):</h2>
-      <pre
-        style="
-          background: #f5f5f5;
-          padding: 1rem;
-          border-radius: 8px;
-          max-width: 600px;
-        "
-        >{{ mlMessage }}
-      </pre>
-    </section>
-  </main>
+        <span class="opacity-50">|</span>
+
+        <RouterLink
+          to="/dashboard"
+          active-class="font-bold underline"
+          class="hover:underline"
+        >
+          Dashboard
+        </RouterLink>
+        <RouterLink
+          to="/events"
+          active-class="font-bold underline"
+          class="hover:underline"
+        >
+          Events
+        </RouterLink>
+      </nav>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-6">
+      <RouterView />
+    </main>
+  </div>
 </template>
