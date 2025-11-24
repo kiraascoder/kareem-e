@@ -12,7 +12,7 @@ const routes = [
   { path: "/contact", name: "contact", component: ContactView },
   { path: "/booking", name: "booking", component: BookingView },
 
-  // halaman internal (misal untuk admin/staff)
+  // internal
   { path: "/dashboard", name: "dashboard", component: DashboardView },
   { path: "/events", name: "events.index", component: EventListView },
 ];
