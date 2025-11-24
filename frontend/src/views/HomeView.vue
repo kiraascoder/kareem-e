@@ -5,27 +5,28 @@
   <section>
     <h2 class="text-3xl font-semibold mb-3">Kareem Entertainment</h2>
     <p class="text-gray-700 mb-4 max-w-2xl">
-      Layanan event organizer yang membantu perusahaan dan individu merancang
-      acara profesional dengan pengalaman yang berkesan.
+      Sistem ini membantu tim Kareem Entertainment menentukan harga penawaran
+      event secara lebih objektif menggunakan pendekatan dynamic pricing.
     </p>
 
     <div class="grid gap-4 md:grid-cols-3">
       <div class="bg-white border rounded-lg p-4 shadow-sm">
         <h3 class="font-semibold mb-1">Corporate Event</h3>
         <p class="text-sm text-gray-600">
-          Gathering, seminar, dan peluncuran produk untuk kebutuhan bisnis.
+          Gathering, seminar, dan acara perusahaan dengan konsep profesional.
         </p>
       </div>
       <div class="bg-white border rounded-lg p-4 shadow-sm">
         <h3 class="font-semibold mb-1">Social Event</h3>
         <p class="text-sm text-gray-600">
-          Ulang tahun, pesta keluarga, komunitas, dan acara spesial lainnya.
+          Ulang tahun, family gathering, acara komunitas, dan event sosial lainnya.
         </p>
       </div>
       <div class="bg-white border rounded-lg p-4 shadow-sm">
         <h3 class="font-semibold mb-1">Dynamic Pricing</h3>
         <p class="text-sm text-gray-600">
-          Sistem rekomendasi harga dinamis untuk membantu keputusan penawaran.
+          Harga rekomendasi berdasarkan jenis event, jumlah peserta, waktu pemesanan,
+          dan high/low season.
         </p>
       </div>
     </div>
