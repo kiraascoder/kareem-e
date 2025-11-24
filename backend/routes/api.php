@@ -2,49 +2,21 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\BookingController;
+use App\Http\Controllers\Api\EventController;
 use App\Http\Controllers\Api\PricingController;
-use App\Services\MlPricingService;
-use Illuminate\Http\Request;
-
-Route::get('/ping', function () {
-    return response()->json([
-        'message' => 'Backend OK',
-    ]);
-});
-
-Route::post('/test-ml', function (Request $request, MlPricingService $mlService) {
-    $payload = [
-        'jenis_event'      => 'corporate',
-        'tanggal_event'    => '2025-12-01',
-        'tanggal_booking'  => '2025-11-20',
-        'jumlah_peserta'   => 100,
-        'harga_dasar'      => 25000000,
-        'season'           => 'high',
-    ];
-
-    $result = $mlService->predictPrice($payload);
-
-    return response()->json([
-        'from_laravel' => true,
-        'payload'      => $payload,
-        'ml_result'    => $result,
-    ]);
-});
-
 
 Route::get('/ping', function () {
     return response()->json(['message' => 'Backend OK']);
 });
-
-
 Route::apiResource('bookings', BookingController::class)
     ->only(['index', 'store', 'show']);
 Route::post('/bookings/{booking}/approve', [BookingController::class, 'approve']);
 Route::post('/bookings/{booking}/reject', [BookingController::class, 'reject']);
-
+Route::post('/pricing/preview', [PricingController::class, 'previewPublic']);
+Route::apiResource('events', EventController::class)
+    ->only(['index', 'show', 'store', 'update']);
+Route::post('/events/{event}/recommend-price', [PricingController::class, 'recommendForEvent']);
 Route::post(
     '/price-recommendations/{priceRecommendation}/apply',
     [PricingController::class, 'applyRecommendation']
 );
-
-Route::post('/pricing/preview', [PricingController::class, 'previewPublic']);
