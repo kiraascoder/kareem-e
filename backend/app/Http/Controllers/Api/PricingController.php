@@ -7,6 +7,8 @@ use App\Models\Season;
 use App\Services\MlPricingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Models\PriceRecommendation;
+
 
 class PricingController extends Controller
 {
@@ -66,4 +68,33 @@ class PricingController extends Controller
             'ml_result' => $result,
         ]);
     }
+    public function applyRecommendation(PriceRecommendation $priceRecommendation)
+{
+    $priceRecommendation->load('event');
+
+    $event = $priceRecommendation->event;
+
+    if (!$event) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Rekomendasi ini tidak terhubung ke event manapun.',
+        ], 400);
+    }
+    PriceRecommendation::where('event_id', $event->id)
+        ->update(['dipakai' => false]);
+
+    $priceRecommendation->dipakai = true;
+    $priceRecommendation->save();
+
+    $event->harga_disepakati = $priceRecommendation->harga_rekomendasi;
+    $event->save();
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Rekomendasi harga diterapkan ke event.',
+        'event'   => $event->fresh(),
+        'recommendation' => $priceRecommendation,
+    ]);
+}
+
 }
