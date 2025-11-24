@@ -1,4 +1,4 @@
-# ml-services/app.py
+
 from fastapi import FastAPI
 from pydantic import BaseModel
 from datetime import datetime
@@ -28,11 +28,11 @@ else:
 
 class PricingRequest(BaseModel):
     jenis_event: str
-    tanggal_event: str          # "YYYY-MM-DD"
-    tanggal_booking: str        # "YYYY-MM-DD"
+    tanggal_event: str         
+    tanggal_booking: str        
     jumlah_peserta: int
     harga_dasar: float
-    season: Optional[str] = None    # "high" / "low" / None
+    season: Optional[str] = None   
 
 
 class PricingResponse(BaseModel):
@@ -51,17 +51,16 @@ def root():
 
 @app.post("/predict-price", response_model=PricingResponse)
 def predict_price(req: PricingRequest):
-    # 1. hitung lead_time
+   
     tanggal_event = datetime.strptime(req.tanggal_event, "%Y-%m-%d").date()
     tanggal_booking = datetime.strptime(req.tanggal_booking, "%Y-%m-%d").date()
     lead_time = abs((tanggal_event - tanggal_booking).days)
 
     season = req.season or "unknown"
 
-    # 2. prediksi permintaan (pakai model kalau ada, kalau tidak heuristik)
+
     if rf_model is not None:
-        # >>> SESUAIKAN DENGAN CARA KAMU MELATIH MODEL <<<
-        # Contoh sangat sederhana: fitur = [jumlah_peserta, lead_time, season_high_flag]
+       
         season_high_flag = 1 if season == "high" else 0
         X = [[req.jumlah_peserta, lead_time, season_high_flag]]
         try:
@@ -74,17 +73,17 @@ def predict_price(req: PricingRequest):
         demand_pred = heuristic_demand(req.jumlah_peserta, lead_time, season)
         model_ver = "heuristic-v1"
 
-    # batasi ke [0,1]
+
     demand_pred = max(0.0, min(1.0, demand_pred))
 
-    # 3. hitung faktor fuzzy (sebenarnya rule-based tapi kita treat sebagai fuzzy engine)
+  
     faktor = compute_factor(
         demand=demand_pred,
         lead_time=lead_time,
         season=season
     )
 
-    # 4. hitung harga rekomendasi
+
     harga_rekomendasi = req.harga_dasar * faktor
 
     return PricingResponse(
