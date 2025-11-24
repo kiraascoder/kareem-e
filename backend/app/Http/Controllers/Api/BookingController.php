@@ -9,9 +9,79 @@ use App\Models\Season;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\Event;
 
 class BookingController extends Controller
 {
+        public function approve(Booking $booking)
+    {
+        if ($booking->status === Booking::STATUS['APPROVED']) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Booking sudah disetujui sebelumnya.',
+                'data'    => $booking->load('event'),
+            ]);
+        }
+        $tanggalEvent   = $booking->tanggal_event;
+        $tanggalBooking = $booking->tanggal_booking ?? now();
+    
+        $season = $booking->season ?: \App\Models\Season::forDate($tanggalEvent);
+    
+        if (!$booking->event) {
+            $kodeEvent = 'EV-' . now()->format('Ymd-His') . '-' . \Illuminate\Support\Str::upper(\Illuminate\Support\Str::random(4));
+    
+            $event = Event::create([
+                'kode_event'      => $kodeEvent,
+                'booking_id'      => $booking->id,
+                'client_id'       => $booking->client_id,
+                'season_id'       => $season ? $season->id : null,
+                'nama_event'      => $booking->nama_event,
+                'jenis_event'     => $booking->jenis_event,
+                'tanggal_event'   => $tanggalEvent,
+                'tanggal_booking' => $tanggalBooking,
+                'jumlah_peserta'  => $booking->jumlah_peserta,
+                'harga_dasar'     => $booking->harga_dasar,
+                'status'          => Event::STATUS['SCHEDULED'],
+                'catatan'         => null,
+            ]);
+        } else {
+            $event = $booking->event;
+        }
+    
+       
+        $booking->status = Booking::STATUS['APPROVED'];
+        $booking->save();
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'Booking berhasil disetujui dan event dibuat/diperbarui.',
+            'data'    => [
+                'booking' => $booking->fresh()->load('season'),
+                'event'   => $event->load('season'),
+            ],
+        ]);
+    }
+    
+    public function reject(Booking $booking)
+    {
+        if ($booking->status === Booking::STATUS['REJECTED']) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Booking sudah ditolak sebelumnya.',
+                'data'    => $booking,
+            ]);
+        }
+    
+        $booking->status = Booking::STATUS['REJECTED'];
+        $booking->save();
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'Booking berhasil ditolak.',
+            'data'    => $booking,
+        ]);
+    }
+
 
     public function index(Request $request)
     {
