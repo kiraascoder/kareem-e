@@ -42,5 +42,9 @@ Route::apiResource('bookings', BookingController::class)
 Route::post('/bookings/{booking}/approve', [BookingController::class, 'approve']);
 Route::post('/bookings/{booking}/reject', [BookingController::class, 'reject']);
 
+Route::post(
+    '/price-recommendations/{priceRecommendation}/apply',
+    [PricingController::class, 'applyRecommendation']
+);
 
 Route::post('/pricing/preview', [PricingController::class, 'previewPublic']);
