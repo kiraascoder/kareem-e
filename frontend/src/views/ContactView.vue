@@ -1,3 +1,4 @@
+
 <script setup>
 import { ref } from "vue";
 
@@ -10,7 +11,6 @@ const form = ref({
 const submitted = ref(false);
 
 const submitForm = () => {
-  // Untuk skripsi cukup dummy dulu: tidak perlu kirim ke backend
   submitted.value = true;
 };
 </script>
@@ -18,10 +18,9 @@ const submitForm = () => {
 <template>
   <section class="max-w-xl">
     <h2 class="text-2xl font-semibold mb-3">Kontak</h2>
-
     <p class="text-gray-700 mb-4">
-      Silakan hubungi kami untuk informasi lebih lanjut terkait layanan dan
-      penawaran.
+      Untuk informasi lebih lanjut terkait layanan dan penawaran,
+      silakan kirim pesan melalui formulir berikut.
     </p>
 
     <form @submit.prevent="submitForm" class="space-y-3 bg-white p-4 border rounded-lg shadow-sm">
@@ -62,11 +61,8 @@ const submitForm = () => {
         Kirim
       </button>
 
-      <p
-        v-if="submitted"
-        class="text-green-600 text-sm mt-2"
-      >
-        Terima kasih, pesan Anda sudah terkirim (dummy).
+      <p v-if="submitted" class="text-green-600 text-sm mt-2">
+        Terima kasih, pesan Anda sudah tercatat (dummy).
       </p>
     </form>
   </section>
