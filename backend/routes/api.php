@@ -39,6 +39,8 @@ Route::get('/ping', function () {
 
 Route::apiResource('bookings', BookingController::class)
     ->only(['index', 'store', 'show']);
+Route::post('/bookings/{booking}/approve', [BookingController::class, 'approve']);
+Route::post('/bookings/{booking}/reject', [BookingController::class, 'reject']);
 
 
 Route::post('/pricing/preview', [PricingController::class, 'previewPublic']);
