@@ -15,18 +15,14 @@ return new class extends Migration
             $table->foreignId('booking_id')->nullable()->constrained('bookings')->nullOnDelete();
             $table->foreignId('client_id')->nullable()->constrained('clients')->nullOnDelete();
             $table->foreignId('season_id')->nullable()->constrained('seasons')->nullOnDelete();
-
             $table->string('nama_event');
             $table->string('jenis_event');
-
             $table->date('tanggal_event');
             $table->date('tanggal_booking'); 
             $table->unsignedInteger('jumlah_peserta');
-
             $table->double('harga_dasar')->default(0);
             $table->double('harga_disepakati')->nullable(); 
             $table->double('total_revenue')->nullable();   
-
             $table->enum('status', ['draft', 'scheduled', 'completed', 'cancelled'])
                 ->default('draft');
 
